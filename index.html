@@ -15,11 +15,9 @@ html
 }
 
 :root {
-  /* ширина белой рамы */
-  --reflection-size: clamp(10px, 2vw, 30px);
-
-  /* ширина внутреннего отражения */
-  --reflection-size: clamp(10px, 2vw, 30px);
+  /* одинаковая ширина рамы и отражения, на 2px уже */
+  --edge-size: clamp(8px, calc(2vw - 2px), 28px);
+  --reflection-size: var(--edge-size);
 }
 
 html,
