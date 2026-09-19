@@ -1,3 +1,4 @@
+```html id="01z0fu"
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +15,14 @@
 }
 
 :root {
-  /* одинаковая ширина рамы и отражения, на 2px уже */
+  /* ширина белой рамы */
   --edge-size: clamp(8px, calc(2vw - 2px), 28px);
+
+  /* отражение той же ширины */
   --reflection-size: var(--edge-size);
+
+  /* черное паспарту той же ширины */
+  --mat-size: var(--edge-size);
 }
 
 html,
@@ -28,16 +34,24 @@ body {
 }
 
 body {
-  background: #fff;
+  background: #000;
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
 
+
+/* ==========================================
+   BLACK MAT
+   ========================================== */
+
 .sky {
   position: fixed;
-  inset: 0;
+
+  /* черное паспарту вокруг изображения */
+  inset: var(--mat-size);
+
   overflow: hidden;
 
   background:
@@ -188,7 +202,7 @@ body.sunset .right-reflection {
 
 <div class="sky">
 
-  <!-- 10% white reflection -->
+  <!-- light blue reflection -->
   <div class="bottom-reflection"></div>
   <div class="right-reflection"></div>
 
@@ -217,3 +231,4 @@ body.sunset .right-reflection {
 
 </body>
 </html>
+```
