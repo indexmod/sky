@@ -1,0 +1,179 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover"
+>
+<title>Sky</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --edge-size: clamp(34px, 8vw, 110px);
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  background: #fff;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sky {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #62b9ff 0%,
+      #3298f7 30%,
+      #1178e5 62%,
+      #0759bd 100%
+    );
+
+  transition: background 1.4s ease;
+}
+
+
+/* ==========================================
+   DAY — L
+   одинаковая толщина
+   прямой стык 90°
+   ========================================== */
+
+.bottom-edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: var(--edge-size);
+
+  background: #fff;
+
+  opacity: 1;
+  transform: translateY(0);
+
+  transition:
+    opacity 1.4s ease,
+    transform 1.4s ease;
+}
+
+.right-edge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  width: var(--edge-size);
+
+  background: #fff;
+
+  opacity: 1;
+  transform: translateX(0);
+
+  transition:
+    opacity 1.4s ease,
+    transform 1.4s ease;
+}
+
+
+/* ==========================================
+   SUNSET
+   без рамы
+   ========================================== */
+
+body.sunset .sky {
+  background:
+    linear-gradient(
+      180deg,
+      #fff0a0 0%,
+      #ffd15c 24%,
+      #f7a137 50%,
+      #e77632 74%,
+      #c84c32 100%
+    );
+}
+
+
+/* убрать L в вечернем режиме */
+
+body.sunset .bottom-edge {
+  opacity: 0;
+  transform: translateY(110%);
+}
+
+body.sunset .right-edge {
+  opacity: 0;
+  transform: translateX(110%);
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 700px) {
+  :root {
+    --edge-size: clamp(34px, 12vw, 110px);
+  }
+}
+
+
+/* ==========================================
+   REDUCED MOTION
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .sky,
+  .bottom-edge,
+  .right-edge {
+    transition: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sky">
+  <div class="bottom-edge"></div>
+  <div class="right-edge"></div>
+</div>
+
+<script>
+(() => {
+  function toggleSky() {
+    document.body.classList.toggle("sunset");
+  }
+
+  document.addEventListener("click", toggleSky);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      toggleSky();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
