@@ -14,14 +14,11 @@
 }
 
 :root {
-  /* ширина белой рамы */
-  --edge-size: clamp(8px, calc(2vw - 2px), 28px);
+  /* оранжевый край — в 2 раза шире */
+  --edge-size: clamp(16px, calc(4vw - 4px), 56px);
 
-  /* отражение той же ширины */
+  /* отражение — тоже в 2 раза шире */
   --reflection-size: var(--edge-size);
-
-  /* черное паспарту той же ширины */
-  --mat-size: var(--edge-size);
 }
 
 html,
@@ -33,127 +30,55 @@ body {
 }
 
 body {
-  background: #000;
+  background: #1178e5;
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-
-/* ==========================================
-   BLACK MAT
-   ========================================== */
-
 .sky {
   position: fixed;
-
-  /* черное паспарту вокруг изображения */
-  inset: var(--mat-size);
-
+  inset: 0;
   overflow: hidden;
 
-  background:
-    linear-gradient(
-      180deg,
-      #62b9ff 0%,
-      #3298f7 30%,
-      #1178e5 62%,
-      #0759bd 100%
-    );
-
-  transition: background 1.4s ease;
+  /* DAY — без градиента */
+  background: #1178e5;
 }
 
 
 /* ==========================================
-   DAY — INNER REFLECTION
+   DAY — REFLECTION AROUND FULL PERIMETER
    ========================================== */
 
-.bottom-reflection {
+.reflection {
   position: absolute;
 
-  left: 0;
-  right: var(--edge-size);
-  bottom: var(--edge-size);
+  inset: var(--edge-size);
 
-  height: var(--reflection-size);
+  border: var(--reflection-size) solid #78b8e8;
 
-  background: #78b8e8;
-
-  opacity: 1;
-  transform: translateY(0);
-
-  transition:
-    opacity 1.4s ease,
-    transform 1.4s ease;
-}
-
-.right-reflection {
-  position: absolute;
-
-  top: 0;
-  right: var(--edge-size);
-  bottom: var(--edge-size);
-
-  width: var(--reflection-size);
-
-  background: #78b8e8;
-
-  opacity: 1;
-  transform: translateX(0);
-
-  transition:
-    opacity 1.4s ease,
-    transform 1.4s ease;
+  pointer-events: none;
 }
 
 
 /* ==========================================
-   DAY — WHITE L FRAME
+   DAY — ORANGE FRAME AROUND FULL PERIMETER
    ========================================== */
 
-.bottom-edge {
+.edge {
   position: absolute;
 
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
 
-  height: var(--edge-size);
+  border: var(--edge-size) solid #FF9900;
 
-  background: #FF9900;
-
-  opacity: 1;
-  transform: translateY(0);
-
-  transition:
-    opacity 1.4s ease,
-    transform 1.4s ease;
-}
-
-.right-edge {
-  position: absolute;
-
-  top: 0;
-  right: 0;
-  bottom: 0;
-
-  width: var(--edge-size);
-
-  background: #FF9900;
-
-  opacity: 1;
-  transform: translateX(0);
-
-  transition:
-    opacity 1.4s ease,
-    transform 1.4s ease;
+  pointer-events: none;
 }
 
 
 /* ==========================================
-   SUNSET — NO FRAME
+   SUNSET
    ========================================== */
 
 body.sunset .sky {
@@ -168,31 +93,9 @@ body.sunset .sky {
     );
 }
 
-body.sunset .bottom-edge,
-body.sunset .bottom-reflection {
-  opacity: 0;
-  transform: translateY(110%);
-}
-
-body.sunset .right-edge,
-body.sunset .right-reflection {
-  opacity: 0;
-  transform: translateX(110%);
-}
-
-
-/* ==========================================
-   REDUCED MOTION
-   ========================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  .sky,
-  .bottom-edge,
-  .right-edge,
-  .bottom-reflection,
-  .right-reflection {
-    transition: none;
-  }
+body.sunset .edge,
+body.sunset .reflection {
+  display: none;
 }
 </style>
 </head>
@@ -201,13 +104,11 @@ body.sunset .right-reflection {
 
 <div class="sky">
 
-  <!-- light blue reflection -->
-  <div class="bottom-reflection"></div>
-  <div class="right-reflection"></div>
+  <!-- reflection around full perimeter -->
+  <div class="reflection"></div>
 
-  <!-- white L frame -->
-  <div class="bottom-edge"></div>
-  <div class="right-edge"></div>
+  <!-- orange frame around full perimeter -->
+  <div class="edge"></div>
 
 </div>
 
